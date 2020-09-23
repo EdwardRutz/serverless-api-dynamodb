@@ -1,0 +1,62 @@
+
+
+service: myserverlessproject
+
+frameworkVersion: '1'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: serverlessUser
+  environment: 
+    tableName: ${self:custom.tableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:*
+      Resource: '*'
+
+custom:
+  tableName: my-players-table
+
+functions:
+    getUser:
+      handler: lambdas/endpoints/getUser.handler
+      events:
+        - http:
+            path: get-user/{ID}
+            method: GET
+            cors: true
+
+    createPlayer:
+       handler: lambdas/endpoints/createPlayer.handler
+       events:
+        - http:
+            path: create-player
+            method: POST
+            cors: true
+            
+    getPlayer:
+       handler: lambdas/endpoints/getPlayer.handler
+       events:
+        - http:
+            path: get-player/{ID}
+            method: GET
+            cors: true
+            
+resources:
+    Resources:
+        myDynamoTable:
+            Type: 'AWS::DynamoDB::Table'
+            Properties:
+                TableName: ${self:custom.tableName}
+                AttributeDefinitions:
+                    - AttributeName: ID
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: ID
+                      KeyType: HASH
+                BillingMode: PAY_PER_REQUEST
+
+
+
