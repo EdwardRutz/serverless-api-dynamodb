@@ -1,5 +1,7 @@
 # Backend API and Database with NodeJS and AWS
 
+>A Demo using the Serverless framework to create an AWS Lambda functions, APIs and DyanamoDB with NodeJS.
+
 
 Created with the [Serverless Framework](https://github.com/serverless-components/fullstack-app)
 
@@ -8,7 +10,6 @@ Created with the [Serverless Framework](https://github.com/serverless-components
 
 - uuid
 - aws sdk
-- Serverless framework
 
 
 ## Notes
